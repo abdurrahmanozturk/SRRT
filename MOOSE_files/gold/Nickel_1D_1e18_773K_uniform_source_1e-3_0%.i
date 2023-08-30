@@ -4,7 +4,7 @@
 # Solution of Point Defect Balance Equations (Eq. 5.1) from the texbook
 # Fundementals of Radiation Materials Science, Gary S. Was
 # Notes : 1- Equations are non-dimensionalized
-#         2- Sinks are uniformly distributed and located at boundaries
+#         2- There are two type of sinks in system; uniformly distributed and grain boundaries
 #         3- Uniformly distributed constant defect source
 #         4- Nickel parameters are used
 #--------------------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #----------------------------------------------------Mesh------------------------------------------------
 [Mesh]
-  type = GeneratedMesh  # use file mesh by external mesh generator vacancy fracion is one for cirlce bc
+  type = GeneratedMesh
   dim = 1
   nx = 50
   # ny = 32
@@ -28,34 +28,34 @@
   [./l]     #Length scale
     initial_condition = 1e-10
   [../]
-  [./Di]    #Interstitial Diffusion Coefficient {m^2/s}
+  [./Di]    #Non-dimensionalized Interstitial Diffusion Coefficient
     initial_condition = 1
   [../]
-  [./Dv]    #Vacancy  Diffusion Coefficient {m^2/s}
+  [./Dv]    #Non-dimensionalized Vacancy  Diffusion Coefficient
     initial_condition = 1.810e-04
   [../]
-  [./K0]     #Displacement damage rate  {dpa/s}
+  [./K0]    #Non-dimensionalized Displacement damage rate
     initial_condition = 9.037e-15
   [../]
-  [./K0_dist] #distributed displacement damage rate  {dpa/s}
+  [./K0_dist]#Non-dimensionalized Distributed displacement damage rate
     initial_condition = 9.037e-15
   [../]
-  [./bias]    #vacancy generation rate bias {1 = no bias}
+  [./bias]   #Non-dimensionalized Vacancy generation rate bias {1 = no bias}
     initial_condition = 1.000e+00
   [../]
-  [./Kiv]     #Recombination rate  {1/s}
+  [./Kiv]    #Non-dimensionalized Recombination rate
     initial_condition = 36.68460966
   [../]
-  [./Kis]     #Sink Reaction rate  {1/s}
+  [./Kis]    #Non-dimensionalized Sink Reaction rate
     initial_condition = 36.67796398
   [../]
-  [./Kvs]     #Sink Reaction rate  {1/s}
+  [./Kvs]    #Non-dimensionalized Sink Reaction rate
     initial_condition = 0.006645681
   [../]
-  [./xie]
+  [./xie]    #Non-dimensionalized Equilibrium Site Fraction for interstitials
     initial_condition = 1.444e-28
   [../]
-  [./xve]
+  [./xve]    #Non-dimensionalized Equilibrium Site Fraction for vacancies
     initial_condition = 3.7e-11
   [../]
   [./super_saturation_i]
@@ -136,10 +136,10 @@
 #-------------------------------------------------Variables----------------------------------------------
 [Variables]
   [./xi]
-    scaling =1e4 #variables
+    scaling =1e4
   [../]
   [./xv]
-    scaling =1e4 #variables
+    scaling =1e4
   [../]
 []
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -168,7 +168,7 @@
   [./recombination_i]
     type = MatReaction
     variable = xi
-    args = 'xv Kiv'     #coupled on materials block
+    args = 'xv Kiv'     #coupled in materials block
     mob_name = reaction_i
   [../]
   [./recombination_v]
@@ -180,7 +180,7 @@
   [./sink_reaction_i]
     type = MatReaction
     variable = xi
-    args = 'xs Kis'     #coupled on materials block
+    args = 'xs Kis'     #coupled in materials block
     mob_name = sink_i
   [../]
   [./sink_reaction_v]
@@ -305,27 +305,27 @@
     type = DerivativeParsedMaterial
     f_name = reaction_i
     args = 'xv Kiv'
-    function = -Kiv*xv  # 1/s regular case
+    function = -Kiv*xv
     derivative_order = 1
   [../]
   [./reaction_v]
     type = DerivativeParsedMaterial
     f_name = reaction_v
     args = 'xi Kiv'
-    function = -Kiv*xi  # 1/s regular case
+    function = -Kiv*xi
     derivative_order = 1
   [../]
   [./sink_i]
     type = DerivativeParsedMaterial
     f_name = sink_i
     args = 'xs Kis'
-    function = -Kis*xs # 1/s      regular case
+    function = -Kis*xs
   [../]
   [./sink_v]
     type = DerivativeParsedMaterial
     f_name = sink_v
     args = 'xs Kvs'
-    function = -Kvs*xs # 1/s      regular case
+    function = -Kvs*xs
   [../]
   [./dt]
     type = TimeStepMaterial
