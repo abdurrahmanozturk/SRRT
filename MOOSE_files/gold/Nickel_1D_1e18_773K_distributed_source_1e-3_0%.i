@@ -4,7 +4,7 @@
 # Solution of Point Defect Balance Equations (Eq. 5.1) from the texbook
 # Fundementals of Radiation Materials Science, Gary S. Was
 # Notes : 1- Equations are non-dimensionalized
-#         2- There are two type of sinks in system; uniformly distributed and grain boundaries
+#         2- There are two type of sinks in system: uniformly distributed and grain boundaries
 #         3- Non-uniformly distributed defect source
 #         4- Nickel parameters are used
 #--------------------------------------------------------------------------------------------------------
