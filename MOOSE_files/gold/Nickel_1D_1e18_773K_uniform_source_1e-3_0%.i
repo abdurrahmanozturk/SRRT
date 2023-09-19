@@ -116,20 +116,20 @@
   [./super_saturation_i]
     type = ParsedAux
     variable = super_saturation_i
-    args = 'Di xi Dv xv xve'
+    args = 'Di xi Dv xv xie xve'
     function = '-(Dv*xv-Di*xi)/(Di*xie)'
   [../]
   [./super_saturation_v]
     type = ParsedAux
     variable = super_saturation_v
-    args = 'Di xi Dv xv xve'
+    args = 'Di xi Dv xv xie xve'
     function = '(Dv*xv-Di*xi)/(Dv*xve)'
   [../]
   [./void_nucleation_rate]
     type = ParsedAux
     variable = void_nucleation_rate
-    args = 'super_saturation'
-    function = 'pow(super_saturation,5.41547)*exp(-14.6586)'
+    args = 'super_saturation_v'
+    function = 'pow(super_saturation_v,5.41547)*exp(-14.6586)'
   [../]
 []
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -193,13 +193,13 @@
     type = MatDiffusion
     variable = xi
     args = Di
-    D_name = diff_i
+    diffusivity = diff_i
   [../]
   [./xv_diff]
     type = MatDiffusion
     variable = xv
     args = Dv
-    D_name = diff_v
+    diffusivity = diff_v
   [../]
   [./xi_time]
     type = TimeDerivative
