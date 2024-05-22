@@ -2,7 +2,7 @@
 #--------------------------------------------------------------------------------------------------------
 # Nickel Case in 1D
 # Solution of Point Defect Balance Equations (Eq. 5.1) from the texbook
-# Fundementals of Radiation Materials Science, Gary S. Was
+# Fundamentals of Radiation Materials Science, Gary S. Was
 # Notes : 1- Equations are non-dimensionalized
 #         2- Sinks are uniformly distributed and located at boundaries
 #         3- Non-uniformly distributed defect source
